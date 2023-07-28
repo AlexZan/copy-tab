@@ -1,9 +1,15 @@
-import * as vscode from 'vscode';
-const clipboard = require('copy-paste');
+const vscode = require('vscode');
 
-export function activate(context: vscode.ExtensionContext) {
-    let openDocuments: vscode.TextDocument[] = [...vscode.workspace.textDocuments];
+async function activate(context) {
+    let clipboard;
+    try {
+        clipboard = await import('clipboardy');
+    } catch (err) {
+        console.log('Failed to import clipboardy:', err);
+        return;
+    }
 
+    let openDocuments = [...vscode.workspace.textDocuments];
     let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.text = "🟢 CopyTab: Tracking";
 
@@ -21,17 +27,18 @@ export function activate(context: vscode.ExtensionContext) {
         updateStatusBarItem();
     });
 
-    let disposable = vscode.commands.registerCommand('extension.copyAllOpenFiles', () => {
+    let disposable = vscode.commands.registerCommand('extension.copyAllOpenFiles', async () => {
         let allContent = '';
-
+    
         for (let document of openDocuments) {
             allContent += document.getText() + '\n';
         }
-
-        clipboard.copy(allContent);
-
+    
+        clipboard.default.writeSync(allContent);
+    
         vscode.window.showInformationMessage('Copied all open files to clipboard!');
     });
+    
 
     context.subscriptions.push(disposable);
     context.subscriptions.push(statusBarItem);
@@ -48,4 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
     updateStatusBarItem();
 }
 
-export function deactivate() {}
+function deactivate() {}
+
+exports.activate = activate;
+exports.deactivate = deactivate;
