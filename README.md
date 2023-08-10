@@ -2,24 +2,30 @@
 
 ## Description
 
-CopyTab is a VS Code extension designed to enhance your coding workflow. It provides an easy and efficient way to copy the content of all open tabs into your clipboard with a single command. This can be an essential tool for quickly sharing code, transferring work between files, or pasting your code directly into a GPT chat for AI-powered assistance.
+Copy the content of all your open tabs. It's an ideal tool for quickly sharing code, transferring work between files, or pasting your code directly into GPT chat for AI-powered assistance.
 
 ## Features
 
 - **Copy All Open Files**: With a simple command, you can copy the text content from all open files in your editor.
 - **Cross-Language Support**: CopyTab can work with any file type that VS Code supports, from Python and JavaScript to Markdown and plain text files.
 - **Real-time Tracking**: The extension tracks the files you are working on and includes their content when you execute the copy command.
-- **Status Bar Indicator**: A handy status bar item shows you when the extension is actively tracking a file.
+- **Status Bar Indicator**: A handy status bar item shows you when the extension is actively tracking a file. Click the status bar item to instantly copy all tracked files to your clipboard.
 
 ## How to use
 
 1. Open all the files you want to copy in VS Code tabs.
 2. **Important:** You must click on each open tab to activate it. The extension starts tracking a file once it's activated. If a tab is not clicked, its content will not be included in the copy command.
-3. Run the "Copy All Open Files" command from the Command Palette (F1).
+3. Click the "CopyTab: Tracking" status bar item or run the "Copy All Open Files" command from the Command Palette (F1).
 4. All the text from your open files is now copied to your clipboard!
-
 ## Release Notes
 
+### 1.0.0
+
+Released on August 7, 2023.
+
+- Release out of Alpha
+
+- Added a clickable status bar item that allows users to execute the copy command directly from the status bar.
 ### 0.1.0
 
 Released on July 25, 2023.
@@ -53,10 +59,7 @@ Due to the way Visual Studio Code's API works, there are a few limitations to be
 4. **Remote Files**: As of the current version, the extension might not work as expected with files that are open from a remote source. 
 
 Please consider these limitations when using the extension. Future versions of the extension may address these issues.
-## Known Bugs
 
-As of version 0.0.2:
 
-- When copying the contents of files, a placeholder string "accessible-buffer-accessible-buffer-" may sometimes be included in the copied text. We are aware of this issue and are actively working to fix it.
 
 Please feel free to report any additional bugs you discover by opening an issue on the [GitHub repository](https://github.com/AlexZan/copy-tab/issues).

@@ -2,8 +2,8 @@
   "name": "copy-tab",
   "publisher": "AlexZanfir",
   "displayName": "Copy Tab",
-  "description": "CopyTab is a VS Code extension that enhances your workflow by copying the content of all open tabs into your clipboard in a single command. It's an ideal tool for quickly sharing code, transferring work between files, or pasting your code directly into GPT chat for AI-powered assistance. Streamline your coding process with CopyTab.",
-  "version": "0.1.0",
+  "description": "Copy the content of all your open tabs. It's an ideal tool for quickly sharing code, transferring work between files, or pasting your code directly into GPT chat for AI-powered assistance.",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.80.0"
   },

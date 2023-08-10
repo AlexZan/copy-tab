@@ -4,6 +4,7 @@ function activate(context) {
     let openDocuments = [];
     let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.text = "🟢 CopyTab: Tracking";
+    statusBarItem.command = 'extension.copyAllOpenFiles';
 
     vscode.window.onDidChangeActiveTextEditor((editor) => {
         if (editor && !openDocuments.includes(editor.document.uri)) {
