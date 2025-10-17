@@ -4,6 +4,13 @@ All notable changes to the "copy-tab" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.2.3] - 2025-10-17
+
+### Changed
+- Updated README with comprehensive documentation of new features
+- Added example output format showing project structure
+- Clarified benefits for LLM integration
+
 ## [1.2.2] - 2025-10-17
 
 ### Fixed
