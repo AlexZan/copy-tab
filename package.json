@@ -3,7 +3,7 @@
   "publisher": "AlexZanfir",
   "displayName": "Copy Tab",
   "description": "Copy the content of all your open tabs. It's an ideal tool for quickly sharing code, transferring work between files, or pasting your code directly into GPT chat for AI-powered assistance.",
-  "icon": "icon.svg",
+  "icon": "icon.png",
   "version": "1.2.2",
   "engines": {
     "vscode": "^1.80.0"
