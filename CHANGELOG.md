@@ -4,6 +4,11 @@ All notable changes to the "copy-tab" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.2.1] - 2025-10-17
+
+### Added
+- Custom marketplace icon for better visual identity
+
 ## [1.2.0] - 2025-10-17
 
 ### Added
