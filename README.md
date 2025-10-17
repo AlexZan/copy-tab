@@ -48,7 +48,13 @@ File: package.json
 This format is optimized for sharing with AI assistants like ChatGPT and Claude, as they can easily understand your project structure and analyze your code.
 ## Release Notes
 
-### 1.2.2 - Latest
+### 1.2.3 - Latest
+
+- **Updated**: Comprehensive README documentation with all new features
+- **Added**: Example output format showing project structure
+- **Improved**: Clarified benefits for LLM integration and AI coding assistants
+
+### 1.2.2
 
 - **Fixed**: Replaced low-quality icon with high-resolution PNG featuring proper transparency
 - Improved marketplace appearance and professional visual identity
