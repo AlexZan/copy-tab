@@ -4,6 +4,35 @@ All notable changes to the "copy-tab" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.3.0] - 2025-10-17
+
+### Added
+- **Comprehensive customization system** with 9 new configuration options
+- `copyTab.treeDepth` - Customize directory tree depth (1-10 levels, default: 3)
+- `copyTab.filePathFormat` - Choose filename, relative, or absolute path display
+- `copyTab.includeProjectStructure` - Toggle project tree visualization on/off
+- `copyTab.respectGitignore` - Option to include/exclude .gitignore patterns
+- `copyTab.sectionHeaders` - Customize output section headers for different LLMs
+- `copyTab.sortOrder` - Sort files by alphabetical, type, or modification date
+- `copyTab.includeLineNumbers` - Add line numbers to file contents
+- `copyTab.fileSeparator` - Custom separators between files
+- `copyTab.fileFilters` - Glob pattern filtering (include/exclude specific file types)
+
+### Improved
+- Workspace settings now properly override user settings
+- All configuration defaults match previous behavior (fully backwards compatible)
+- Enhanced documentation with comprehensive configuration examples
+
+### Technical
+- Added helper functions: `getConfig()`, `shouldIncludeFile()`, `formatFilePath()`, `addLineNumbers()`, `sortEntries()`
+- Implemented simple glob pattern matcher for file filters
+- Refactored `buildFileTree()` to accept configuration parameters
+
+## [1.2.4] - 2025-10-17
+
+### Changed
+- Fixed version number in README release notes
+
 ## [1.2.3] - 2025-10-17
 
 ### Changed
