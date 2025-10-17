@@ -48,6 +48,18 @@ File: package.json
 
 This format is optimized for sharing with AI assistants like ChatGPT and Claude, as they can easily understand your project structure and analyze your code.
 
+## ⭐ Love CopyTab?
+
+If you find this extension helpful, please consider:
+
+- **⭐ [Rate it on the VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=AlexZanfir.copy-tab&ssr=false#review-details)** - Help others discover CopyTab!
+- **📝 Leave a review** - Share your experience and use cases
+- **🐛 [Report issues on GitHub](https://github.com/AlexZan/copy-tab/issues)** - Help us improve
+- **💡 [Suggest features](https://github.com/AlexZan/copy-tab/issues/new)** - Tell us what you'd like to see
+- **⭐ Star the [GitHub repository](https://github.com/AlexZan/copy-tab)** - Show your support
+
+Your feedback helps make CopyTab better for everyone and helps other developers discover this tool. Thank you! 🙏
+
 ## Configuration
 
 CopyTab is highly customizable! You can configure it through VS Code settings (File > Preferences > Settings, then search for "Copy Tab").

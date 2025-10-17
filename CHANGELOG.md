@@ -4,6 +4,13 @@ All notable changes to the "copy-tab" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.3.1] - 2025-10-17
+
+### Improved
+- Enhanced marketplace discoverability with targeted keywords (llm, ai, chatgpt, claude, etc.)
+- Updated extension description to highlight key features and AI integration
+- Added "Love CopyTab?" section in README with links to rate, review, and support
+
 ## [1.3.0] - 2025-10-17
 
 ### Added
