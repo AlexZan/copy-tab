@@ -4,6 +4,9 @@ node_modules
 .vscode-test/
 *.vsix
 
+# IDE & Editor
+.claude/
+
 # Marketing & Social Media
 marketing/
 reddit_credentials.json
