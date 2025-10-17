@@ -3,3 +3,8 @@ dist
 node_modules
 .vscode-test/
 *.vsix
+
+# Marketing & Social Media
+marketing/
+reddit_credentials.json
+reddit_posts_log.txt
