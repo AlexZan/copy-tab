@@ -4,6 +4,13 @@ All notable changes to the "copy-tab" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.2.2] - 2025-10-17
+
+### Fixed
+- Convert marketplace icon from PNG to SVG for better scalability
+- Fix icon transparency (proper alpha channel instead of checkered pattern)
+- Improve icon rendering quality across different marketplace contexts
+
 ## [1.2.1] - 2025-10-17
 
 ### Added

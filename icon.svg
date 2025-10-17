@@ -1,0 +1,48 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Clipboard base -->
+  <g id="clipboard">
+    <!-- Clipboard handle -->
+    <rect x="24" y="12" width="12" height="8" rx="2" fill="#0891b2"/>
+    <!-- Clipboard body -->
+    <rect x="20" y="18" width="40" height="68" rx="3" fill="#0891b2"/>
+    <!-- Clipboard content lines -->
+    <rect x="28" y="28" width="20" height="2" fill="white"/>
+    <rect x="28" y="33" width="20" height="2" fill="white"/>
+    <rect x="28" y="38" width="20" height="2" fill="white"/>
+    <rect x="28" y="43" width="15" height="2" fill="white"/>
+  </g>
+
+  <!-- Stacked document tabs with offset effect -->
+  <g id="documents">
+    <!-- Back document (darkest) -->
+    <rect x="56" y="32" width="48" height="48" rx="4" fill="#06b6d4" opacity="0.6"/>
+
+    <!-- Middle document -->
+    <rect x="52" y="28" width="48" height="48" rx="4" fill="#0891b2" opacity="0.8"/>
+
+    <!-- Front document (topmost) -->
+    <rect x="48" y="24" width="48" height="48" rx="4" fill="#0284c7"/>
+
+    <!-- Sparkles on front document -->
+    <g id="sparkles" fill="white">
+      <!-- Sparkle 1 (top right) -->
+      <circle cx="82" cy="32" r="1.5"/>
+      <circle cx="84" cy="34" r="1"/>
+      <circle cx="82" cy="36" r="1"/>
+      <circle cx="80" cy="34" r="1"/>
+
+      <!-- Sparkle 2 (bottom right) -->
+      <circle cx="92" cy="52" r="1.5"/>
+      <circle cx="94" cy="54" r="1"/>
+      <circle cx="92" cy="56" r="1"/>
+      <circle cx="90" cy="54" r="1"/>
+    </g>
+  </g>
+
+  <!-- Arrow indicating action/flow -->
+  <g id="arrow" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 70 50 Q 85 40 95 35" opacity="0.9"/>
+    <!-- Arrow head -->
+    <path d="M 95 35 L 92 40 M 95 35 L 100 38" opacity="0.9"/>
+  </g>
+</svg>
