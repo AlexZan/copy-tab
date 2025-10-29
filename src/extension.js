@@ -106,16 +106,16 @@ function addLineNumbers(content) {
 }
 
 /**
- * Parse .gitignore file and return a set of patterns to ignore
+ * Parse .gitignore file and return array of patterns to ignore
  * @param {string} rootPath - The workspace root path
  * @param {boolean} respectGitignore - Whether to respect gitignore
- * @returns {Set<string>} - Set of directory/file names to ignore
+ * @returns {string[]} - Array of gitignore patterns
  */
 function parseGitignore(rootPath, respectGitignore) {
-	const ignoreDirs = new Set([".git", ".gitignore"]);
+	const ignorePatterns = [".git", ".gitignore"];
 
 	if (!respectGitignore) {
-		return ignoreDirs; // Only return base ignores
+		return ignorePatterns; // Only return base ignores
 	}
 
 	try {
@@ -129,7 +129,7 @@ function parseGitignore(rootPath, respectGitignore) {
 				if (line && !line.startsWith("#")) {
 					// Remove trailing slashes
 					line = line.replace(/\/$/, "");
-					ignoreDirs.add(line);
+					ignorePatterns.push(line);
 				}
 			});
 		}
@@ -137,7 +137,53 @@ function parseGitignore(rootPath, respectGitignore) {
 		console.log(`[CopyTab] Error reading .gitignore: ${error.message}`);
 	}
 
-	return ignoreDirs;
+	return ignorePatterns;
+}
+
+/**
+ * Check if a path should be ignored based on gitignore patterns
+ * @param {string} relativePath - Path relative to workspace root
+ * @param {string} name - File or directory name
+ * @param {string[]} ignorePatterns - Array of gitignore patterns
+ * @returns {boolean} - True if should be ignored
+ */
+function shouldIgnore(relativePath, name, ignorePatterns) {
+	const normalizedPath = relativePath.replace(/\\/g, '/');
+
+	for (const pattern of ignorePatterns) {
+		let patternToMatch = pattern;
+
+		// Handle leading slash (root-only pattern in gitignore)
+		if (patternToMatch.startsWith('/')) {
+			// Remove leading slash and match against full path
+			patternToMatch = patternToMatch.substring(1);
+
+			// For root-level patterns, check if path starts with the pattern
+			if (normalizedPath === patternToMatch || normalizedPath.startsWith(patternToMatch + '/')) {
+				return true;
+			}
+			continue;
+		}
+
+		// Exact match on name
+		if (patternToMatch === name) {
+			return true;
+		}
+
+		// Pattern with wildcards - match against name
+		if (minimatch(name, patternToMatch)) {
+			return true;
+		}
+
+		// Check full relative path for patterns with /
+		if (patternToMatch.includes('/') || patternToMatch.includes('\\')) {
+			const normalizedPattern = patternToMatch.replace(/\\/g, '/');
+			if (minimatch(normalizedPath, normalizedPattern)) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 /**
@@ -186,7 +232,7 @@ function sortEntries(entries, sortOrder, dirPath) {
  * @returns {string} - A formatted file tree string
  */
 function buildFileTree(rootPath, maxDepth, respectGitignore, sortOrder) {
-	const ignoreDirs = parseGitignore(rootPath, respectGitignore);
+	const ignorePatterns = parseGitignore(rootPath, respectGitignore);
 
 	function buildTree(dir, prefix = "", depth = 0) {
 		if (depth > maxDepth) return "";
@@ -201,9 +247,17 @@ function buildFileTree(rootPath, maxDepth, respectGitignore, sortOrder) {
 			const sortedDirs = sortEntries(dirs, sortOrder, dir);
 			const sortedFiles = sortEntries(files, sortOrder, dir);
 
-			// Filter ignored directories
-			const visibleDirs = sortedDirs.filter((d) => !ignoreDirs.has(d.name));
-			const allEntries = [...sortedFiles, ...visibleDirs];
+			// Filter ignored items based on gitignore patterns
+			const visibleDirs = sortedDirs.filter((d) => {
+				const relativePath = path.relative(rootPath, path.join(dir, d.name));
+				return !shouldIgnore(relativePath, d.name, ignorePatterns);
+			});
+			const visibleFiles = sortedFiles.filter((f) => {
+				const relativePath = path.relative(rootPath, path.join(dir, f.name));
+				return !shouldIgnore(relativePath, f.name, ignorePatterns);
+			});
+
+			const allEntries = [...visibleFiles, ...visibleDirs];
 
 			allEntries.forEach((entry, index) => {
 				const isLast = index === allEntries.length - 1;
@@ -212,7 +266,7 @@ function buildFileTree(rootPath, maxDepth, respectGitignore, sortOrder) {
 
 				if (entry.isFile()) {
 					tree += prefix + connector + entry.name + "\n";
-				} else if (!ignoreDirs.has(entry.name)) {
+				} else {
 					tree += prefix + connector + entry.name + "/\n";
 					tree += buildTree(path.join(dir, entry.name), nextPrefix, depth + 1);
 				}
@@ -230,29 +284,41 @@ function buildFileTree(rootPath, maxDepth, respectGitignore, sortOrder) {
 }
 
 function activate(context) {
-	let openDocuments = [];
 	let statusBarItem = vscode.window.createStatusBarItem(
 		vscode.StatusBarAlignment.Right,
 		100,
 	);
-	statusBarItem.text = "🟢 CopyTab: Tracking";
 	statusBarItem.command = "extension.copyAllOpenFiles";
 
-	vscode.window.onDidChangeActiveTextEditor((editor) => {
-		if (editor && !openDocuments.includes(editor.document.uri)) {
-			openDocuments.push(editor.document.uri);
-			console.log(
-				`[CopyTab] Document ${editor.document.uri} added to tracking.`,
-			);
-		}
+	/**
+	 * Get all currently open text documents (visible tabs)
+	 * @returns {vscode.Uri[]} - Array of document URIs
+	 */
+	function getOpenDocuments() {
+		const openTabs = [];
+		// Iterate through all tab groups and their tabs
+		vscode.window.tabGroups.all.forEach(group => {
+			group.tabs.forEach(tab => {
+				// Check if tab has a text document input
+				if (tab.input instanceof vscode.TabInputText) {
+					const uri = tab.input.uri;
+					// Only include file URIs and avoid duplicates
+					if (uri.scheme === 'file' && !openTabs.some(u => u.toString() === uri.toString())) {
+						openTabs.push(uri);
+					}
+				}
+			});
+		});
+		return openTabs;
+	}
+
+	// Listen for tab changes
+	vscode.window.tabGroups.onDidChangeTabs(() => {
 		updateStatusBarItem();
 	});
 
-	vscode.workspace.onDidCloseTextDocument((document) => {
-		openDocuments = openDocuments.filter(
-			(uri) => uri.toString() !== document.uri.toString(),
-		);
-		console.log(`[CopyTab] Document ${document.uri} removed from tracking.`);
+	// Also listen for active editor changes to catch any edge cases
+	vscode.window.onDidChangeActiveTextEditor(() => {
 		updateStatusBarItem();
 	});
 
@@ -300,6 +366,7 @@ function activate(context) {
 			}
 
 			// Process each open document
+			const openDocuments = getOpenDocuments();
 			for (let uri of openDocuments) {
 				let document = await vscode.workspace.openTextDocument(uri);
 
@@ -346,22 +413,17 @@ function activate(context) {
 	context.subscriptions.push(statusBarItem);
 
 	function updateStatusBarItem() {
-		if (openDocuments.length > 0) {
-			console.log("[CopyTab] Showing status bar item.");
-			statusBarItem.show();
-		} else {
-			console.log("[CopyTab] Hiding status bar item.");
-			statusBarItem.hide();
-		}
+		const openDocuments = getOpenDocuments();
+		const count = openDocuments.length;
+		statusBarItem.text = `$(files) CopyTab (${count})`;
+		statusBarItem.tooltip = count === 1
+			? "1 file tracked - Click to copy"
+			: `${count} files tracked - Click to copy`;
+		statusBarItem.show();
 	}
 
-	if (vscode.window.activeTextEditor) {
-		openDocuments.push(vscode.window.activeTextEditor.document.uri);
-		console.log(
-			`[CopyTab] Document ${vscode.window.activeTextEditor.document.uri} added to tracking.`,
-		);
-		updateStatusBarItem();
-	}
+	// Initial update
+	updateStatusBarItem();
 }
 
 function deactivate() {}

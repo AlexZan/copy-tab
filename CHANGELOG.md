@@ -4,6 +4,30 @@ All notable changes to the "copy-tab" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.4.0] - 2025-10-29
+
+### Added
+- **Enhanced status bar**: Always visible with file count display (e.g., "CopyTab (3)")
+- Status bar shows count of currently open tabs with helpful tooltip
+
+### Fixed
+- **Improved gitignore handling**: Properly respects all gitignore patterns including wildcards and root-level patterns
+- Fixed leading slash patterns (e.g., `/node_modules`) to only match at repository root
+- Fixed status bar to track only visible tabs instead of all documents in memory
+- Fixed startup bug where status bar showed incorrect count on VS Code start
+- Status bar now uses VS Code's `tabGroups` API for accurate tab tracking
+
+### Changed
+- Switched from accumulative file tracking to real-time open tab tracking
+- Status bar now always visible (no longer hides when no files are open)
+- Better pattern matching for gitignore with support for path-based and wildcard patterns
+
+### Technical
+- Implemented proper gitignore pattern parser with leading slash support
+- Added `shouldIgnore()` function for comprehensive pattern matching
+- Refactored `getOpenDocuments()` to use `vscode.window.tabGroups` API
+- Updated event listeners to use `onDidChangeTabs` for better responsiveness
+
 ## [1.3.1] - 2025-10-17
 
 ### Improved

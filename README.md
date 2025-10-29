@@ -11,16 +11,16 @@ Copy the content of all your open tabs with an intelligent project structure vis
 - **🚫 Smart Filtering**: Respects your `.gitignore` file to exclude build artifacts, dependencies, and temporary files.
 - **📁 Intelligent Depth Limiting**: Shows up to 3 levels of directory nesting to keep output clean and readable.
 - **🌐 Cross-Language Support**: Works with any file type VS Code supports - Python, JavaScript, TypeScript, Go, Rust, C++, Java, and more.
-- **⚡ Real-time Tracking**: The extension automatically tracks the files you're working on and includes them in the output.
-- **📍 Status Bar Indicator**: A convenient status bar item shows when the extension is actively tracking files. Click it to instantly copy all content to your clipboard.
+- **⚡ Real-time Tab Tracking**: Automatically tracks all currently open tabs and updates count in real-time as you open/close files.
+- **📍 Enhanced Status Bar**: Always-visible status bar showing exact file count (e.g., "CopyTab (3)"). Click to instantly copy all open tabs to clipboard.
 - **🔄 Cross-Platform Compatible**: Proper handling of Windows (`\`) and Unix (`/`) path separators.
 - **🎯 Filename Headers**: Each file's content is clearly labeled with its filename for better organization.
 - **⚙️ Highly Customizable**: 9 configuration options to tailor output for your specific needs - adjust tree depth, file paths, sorting, line numbers, filters, and more.
 
 ## How to Use
 
-1. **Open Files**: Open the files you want to copy in VS Code tabs. Make sure to click on each tab you want included so the extension tracks them.
-2. **Copy**: Click the **"🟢 CopyTab: Tracking"** status bar button (bottom right of VS Code) or run **"Copy All Open Files"** from the Command Palette (Ctrl+Shift+P).
+1. **Open Files**: Open the files you want to copy in VS Code tabs. The extension automatically tracks all visible tabs.
+2. **Copy**: Click the **"CopyTab (N)"** status bar button (bottom right of VS Code) showing your file count, or run **"CopyTab All Open Files"** from the Command Palette (Ctrl+Shift+P).
 3. **Paste**: Paste the clipboard contents into your LLM chat, documentation, or wherever you need it.
 
 ### Output Format
@@ -191,7 +191,16 @@ This allows you to have different configurations for different types of projects
 
 ## Release Notes
 
-### 1.3.0 - Latest (Major Feature Release)
+### 1.4.0 - Latest
+
+**Enhanced Status Bar & Improved Gitignore**
+- Status bar now always visible with real-time file count display (e.g., "CopyTab (3)")
+- Fixed gitignore handling to properly respect all patterns including wildcards and root-level paths
+- Status bar now tracks only visible tabs (not accumulated history)
+- Better tab tracking using VS Code's tabGroups API
+- Fixed startup bug where incorrect file count was shown
+
+### 1.3.0 - Major Feature Release
 
 **Comprehensive Customization System** - CopyTab is now highly configurable!
 
